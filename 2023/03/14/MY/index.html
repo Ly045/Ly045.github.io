@@ -1,0 +1,714 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="淋鱼鱼">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="入门篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL-靶场">
+<meta property="og:url" content="http://ly045.github.io/2023/03/14/MY/index.html">
+<meta property="og:site_name" content="欢迎来到淋鱼鱼的小窝">
+<meta property="og:description" content="入门篇">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-14T04:44:00.000Z">
+<meta property="article:modified_time" content="2023-06-10T17:06:52.370Z">
+<meta property="article:author" content="淋鱼鱼">
+<meta property="article:tag" content="年少有梦不止于心动">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>MySQL-靶场 - 欢迎来到淋鱼鱼的小窝</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ly045.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":30,"cursorChar":"","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 110vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>淋鱼鱼</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/sanye.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MySQL-靶场"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-14 12:44" pubdate>
+          2023年3月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL-靶场</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>什么是数据库？<br>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。</p>
+<p>每个数据库都有一个或多个不同的 API 用于创建，访问，管理，搜索和复制所保存的数据。</p>
+<p>我们也可以将数据存储在文件中，但是在文件中读写数据速度相对较慢。</p>
+<p>所以，现在我们使用关系型数据库管理系统（RDBMS）来存储和管理大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。</p>
+<p>RDBMS 即关系数据库管理系统(Relational Database Management System)的特点：</p>
+<p>1.数据以表格的形式出现<br>2.每行为各种记录名称<br>3.每列为记录名称所对应的数据域<br>4.许多的行和列组成一张表单<br>5.若干的表单组成database</p>
+<h2 id="MySQL-增删改查语句增删改查的语句命令为"><a href="#MySQL-增删改查语句增删改查的语句命令为" class="headerlink" title="MySQL 增删改查语句增删改查的语句命令为"></a>MySQL 增删改查语句增删改查的语句命令为</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 复制">增：insert<br>删：delete<br>改：update<br>查：SELECT或者show<br></code></pre></td></tr></table></figure>
+<h2 id="MySQL-PHP-语法"><a href="#MySQL-PHP-语法" class="headerlink" title="MySQL PHP 语法"></a>MySQL PHP 语法</h2><h3 id="MySQL-可应用于多种语言，包括-PERL-C-C-JAVA-和-PHP，在这些语言中，MySQL-在-PHP-的-web-开发中是应用最广泛。在本教程中我们大部分实例都采用了-PHP-语言。如果你想了解-MySQL-在-PHP-中的应用，可以访问我们的-PHP-中使用-MySQL-介绍。PHP-提供了多种方式来访问和操作-MySQL-数据库记录。PHP-MySQL-函数格式如下："><a href="#MySQL-可应用于多种语言，包括-PERL-C-C-JAVA-和-PHP，在这些语言中，MySQL-在-PHP-的-web-开发中是应用最广泛。在本教程中我们大部分实例都采用了-PHP-语言。如果你想了解-MySQL-在-PHP-中的应用，可以访问我们的-PHP-中使用-MySQL-介绍。PHP-提供了多种方式来访问和操作-MySQL-数据库记录。PHP-MySQL-函数格式如下：" class="headerlink" title="MySQL 可应用于多种语言，包括 PERL, C, C++, JAVA 和 PHP，在这些语言中，MySQL 在 PHP 的 web 开发中是应用最广泛。在本教程中我们大部分实例都采用了 PHP 语言。如果你想了解 MySQL 在 PHP 中的应用，可以访问我们的 PHP 中使用 MySQL 介绍。PHP 提供了多种方式来访问和操作 MySQL 数据库记录。PHP MySQL 函数格式如下："></a>MySQL 可应用于多种语言，包括 PERL, C, C++, JAVA 和 PHP，在这些语言中，MySQL 在 PHP 的 web 开发中是应用最广泛。在本教程中我们大部分实例都采用了 PHP 语言。如果你想了解 MySQL 在 PHP 中的应用，可以访问我们的 PHP 中使用 MySQL 介绍。PHP 提供了多种方式来访问和操作 MySQL 数据库记录。PHP MySQL 函数格式如下：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">mysqli_function(value,value,...);<br></code></pre></td></tr></table></figure>
+<h2 id="下上格式中-function部分描述了mysql函数的功能，如"><a href="#下上格式中-function部分描述了mysql函数的功能，如" class="headerlink" title="下上格式中 function部分描述了mysql函数的功能，如"></a>下上格式中 function部分描述了mysql函数的功能，如</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 复制">mysqli_connect($connect);<br>mysqli_query($connect,&quot;SQL 语句&quot;);<br>mysqli_fetch_array()<br>mysqli_close()<br></code></pre></td></tr></table></figure>
+<h2 id="以下实例展示了PHP调用mysql函数的语法："><a href="#以下实例展示了PHP调用mysql函数的语法：" class="headerlink" title="以下实例展示了PHP调用mysql函数的语法："></a>以下实例展示了PHP调用mysql函数的语法：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs 复制">&lt;?php<br>$retval = mysqli_function(value, [value,...]);<br>if( !$retval )<br>&#123;<br>   die ( &quot;相关错误信息&quot; );<br>&#125;<br>// 其他 MySQL 或 PHP 语句<br>?&gt;<br></code></pre></td></tr></table></figure>
+
+<!--More info: [Server]()-->
+
+<h2 id="MySQL创建数据库"><a href="#MySQL创建数据库" class="headerlink" title="MySQL创建数据库"></a>MySQL创建数据库</h2><h3 id="我们可以在登陆-MySQL-服务后，使用-create-命令创建数据库，语法如下"><a href="#我们可以在登陆-MySQL-服务后，使用-create-命令创建数据库，语法如下" class="headerlink" title="我们可以在登陆 MySQL 服务后，使用 create 命令创建数据库，语法如下:"></a>我们可以在登陆 MySQL 服务后，使用 create 命令创建数据库，语法如下:</h3><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> 数据库名;<br></code></pre></td></tr></table></figure>
+<h2 id="以下命令简单的演示了创建数据库的过程，数据名为-RUNOOB"><a href="#以下命令简单的演示了创建数据库的过程，数据名为-RUNOOB" class="headerlink" title="以下命令简单的演示了创建数据库的过程，数据名为 RUNOOB:"></a>以下命令简单的演示了创建数据库的过程，数据名为 RUNOOB:</h2><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@host]</span><span class="hljs-meta"># mysql -u root -p   </span><br>Enter password:******  <span class="hljs-meta"># 登录后进入终端</span><br>mysql&gt; create DATABASE RUNOOB<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<h2 id="使用-mysqladmin-创建数据库"><a href="#使用-mysqladmin-创建数据库" class="headerlink" title="使用 mysqladmin 创建数据库"></a>使用 mysqladmin 创建数据库</h2><h3 id="使用普通用户，你可能需要特定的权限来创建或者删除-MySQL-数据库。所以我们这边使用root用户登录，root用户拥有最高权限，可以使用-mysql-mysqladmin-命令来创建数据库。以下命令简单的演示了创建数据库的过程，数据名为-RUNOOB"><a href="#使用普通用户，你可能需要特定的权限来创建或者删除-MySQL-数据库。所以我们这边使用root用户登录，root用户拥有最高权限，可以使用-mysql-mysqladmin-命令来创建数据库。以下命令简单的演示了创建数据库的过程，数据名为-RUNOOB" class="headerlink" title="使用普通用户，你可能需要特定的权限来创建或者删除 MySQL 数据库。所以我们这边使用root用户登录，root用户拥有最高权限，可以使用 mysql mysqladmin 命令来创建数据库。以下命令简单的演示了创建数据库的过程，数据名为 RUNOOB:"></a>使用普通用户，你可能需要特定的权限来创建或者删除 MySQL 数据库。所以我们这边使用root用户登录，root用户拥有最高权限，可以使用 mysql mysqladmin 命令来创建数据库。以下命令简单的演示了创建数据库的过程，数据名为 RUNOOB:</h3><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@host]</span><span class="hljs-meta"># mysqladmin -u root -p create RUNOOB</span><br>Enter password:******<br></code></pre></td></tr></table></figure>
+<p>以上命令执行成功后会创建 MySQL 数据库 RUNOOB。</p>
+<!-- More info: [Generating](https://hexo.io/docs/generating.html) -->
+
+
+<h3 id="使用-PHP脚本-创建数据库"><a href="#使用-PHP脚本-创建数据库" class="headerlink" title="使用 PHP脚本 创建数据库"></a>使用 PHP脚本 创建数据库</h3><p>PHP 使用 mysqli_query 函数来创建或者删除 MySQL 数据库。<br>该函数有两个参数，在执行成功时返回 TRUE，否则返回 FALSE。<br> 语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">mysqli_query(connection,query,resultmode);<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">connection</td>
+<td align="center">必需。规定要使用的 MySQL 连接。</td>
+</tr>
+<tr>
+<td align="left">query</td>
+<td align="center">必需，规定查询字符串。</td>
+</tr>
+<tr>
+<td align="left">resultmode</td>
+<td align="center">可选。一个常量。可以是下列值中的任意一个MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）MYSQLI_STORE_RESULT（默认）</td>
+</tr>
+</tbody></table>
+<!-- More info: [Deployment](https://hexo.io/docs/one-command-deployment.html) -->
+<h2 id="使用php来创建一个数据库："><a href="#使用php来创建一个数据库：" class="headerlink" title="使用php来创建一个数据库："></a>使用php来创建一个数据库：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs 复制">&lt;?php<br>$dbhost = &#x27;localhost&#x27;;  // mysql服务器主机地址<br>$dbuser = &#x27;root&#x27;;            // mysql用户名<br>$dbpass = &#x27;123456&#x27;;          // mysql用户名密码<br>$conn = mysqli_connect($dbhost, $dbuser, $dbpass);<br>if(! $conn )<br>&#123;<br>  die(&#x27;连接错误: &#x27; . mysqli_error($conn));<br>&#125;<br>echo &#x27;连接成功&lt;br /&gt;&#x27;;<br>$sql = &#x27;CREATE DATABASE RUNOOB&#x27;;<br>$retval = mysqli_query($conn,$sql );<br>if(! $retval )<br>&#123;<br>    die(&#x27;创建数据库失败: &#x27; . mysqli_error($conn));<br>&#125;<br>echo &quot;数据库 RUNOOB 创建成功\n&quot;;<br>mysqli_close($conn);<br>?&gt;<br></code></pre></td></tr></table></figure>
+<p>执行成功后会返回以下结果：<br>链接成功 数据库RUNOOB 创建成功<br>如果数据库已存在 执行后 返回已下结果：<br>连接成功 创建数据库失败:Can’t create database ‘RUNOOB’;database exists</p>
+<h2 id="MySQL删除数据库"><a href="#MySQL删除数据库" class="headerlink" title="MySQL删除数据库"></a>MySQL删除数据库</h2><p>使用普通用户登陆 MySQL 服务器，你可能需要特定的权限来创建或者删除 MySQL 数据库，所以我们这边使用 root 用户登录，root 用户拥有最高权限。<br>在删除数据库过程中，务必要十分谨慎，因为在执行删除命令后，所有数据将会消失。</p>
+<h3 id="drop-命令删除数据库"><a href="#drop-命令删除数据库" class="headerlink" title="drop 命令删除数据库"></a>drop 命令删除数据库</h3><p>drop 命令格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">drop database &lt;要删除库的名称&gt;;<br></code></pre></td></tr></table></figure>
+<p>例如删除名为 name 的数据库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">mysql&gt; drop database name;<br></code></pre></td></tr></table></figure>
+<h2 id="靶场"><a href="#靶场" class="headerlink" title="靶场"></a>靶场</h2><h3 id="xxs常用方法"><a href="#xxs常用方法" class="headerlink" title="xxs常用方法"></a>xxs常用方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs 复制">&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;<br>            1 or  1=1<br>            kobe&#x27; or 1=1#<br>            like &#x27;%XXXX%&#x27; or 1=1 #%&#x27;<br>XXXX%&#x27; or 1=1 #<br></code></pre></td></tr></table></figure>
+
+<!-- Meet[关于作者](这将是链接) -->
+
+<h3 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h3><p>获取当前数据库的名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">kobe&#x27;union select database(),user()#<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">kobe&#x27; union select table_schema,table_name from information_schema.tables where table_schema=&#x27;pikachu&#x27;#<br></code></pre></td></tr></table></figure>
+
+<p>对应加密账号MD5解密</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 复制">kobe&#x27; union select username,password from users#<br></code></pre></td></tr></table></figure>
+
+<!-- More info: [Generating](https://hexo.io/docs/generating.html) - - >
+
+### 待修改
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">还在等我写吗?<br><br></code></pre></td></tr></table></figure>
+
+
+<!-- More info: [Deployment](https://hexo.io/docs/one-command-deployment.html) -->
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%A5%E9%97%A8%E7%AF%87/" class="category-chain-item">入门篇</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B9%B4%E5%B0%91%E6%9C%89%E6%A2%A6%E4%B8%8D%E6%AD%A2%E4%BA%8E%E5%BF%83%E5%8A%A8/">#年少有梦不止于心动</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL-靶场</div>
+      <div>http://ly045.github.io/2023/03/14/MY/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>淋鱼鱼</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              淋淼淼
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/29/SD/" title="闪动校园">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">闪动校园</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/29/DH/" title="作者导航">
+                        <span class="hidden-mobile">作者导航</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://chat2.aichatos.top/?ref=www.deepdh.com#/chat/1682753472114" target="_blank" rel="nofollow noopener"><span>淋</span></a> <i class="iconfont icon-love"></i> <a href="" target="_blank" rel="nofollow noopener"><span>鱼鱼</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
+
