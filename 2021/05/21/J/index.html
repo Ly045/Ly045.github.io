@@ -16,15 +16,15 @@
   <meta name="author" content="淋鱼鱼">
   <meta name="keywords" content="">
   
-    <meta name="description" content="欢迎你来到界面XSS特殊的代码实现了欢迎功能！            window.alert &#x3D; function()   {      confirm(&quot;完成的不错！&quot;);  window.location.href&#x3D;&quot;level2.php?keyword&#x3D;test&quot;;  }  欢迎来到level1   欢迎来到level1">
+    <meta name="description" content="欢迎你来到界面XSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XSS">
 <meta property="og:url" content="http://ly045.github.io/2021/05/21/J/index.html">
 <meta property="og:site_name" content="欢迎来到淋鱼鱼的小窝">
-<meta property="og:description" content="欢迎你来到界面XSS特殊的代码实现了欢迎功能！            window.alert &#x3D; function()   {      confirm(&quot;完成的不错！&quot;);  window.location.href&#x3D;&quot;level2.php?keyword&#x3D;test&quot;;  }  欢迎来到level1   欢迎来到level1">
+<meta property="og:description" content="欢迎你来到界面XSS">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-21T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-06-17T11:38:24.559Z">
+<meta property="article:modified_time" content="2023-06-23T05:56:27.401Z">
 <meta property="article:author" content="淋鱼鱼">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -114,7 +114,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/">
                 <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
+                <span>主界面</span>
               </a>
             </li>
           
@@ -126,7 +126,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
+                <span>所有文章</span>
               </a>
             </li>
           
@@ -138,7 +138,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
+                <span>文章分类</span>
               </a>
             </li>
           
@@ -150,7 +150,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>文章标签</span>
               </a>
             </li>
           
@@ -162,7 +162,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>关于淋鱼鱼</span>
               </a>
             </li>
           
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          133 字
+          10 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          2 分钟
+          1 分钟
         
       </span>
     
@@ -277,7 +277,8 @@
             
               <div class="markdown-body">
                 
-                <h2 id="欢迎你来到界面XSS"><a href="#欢迎你来到界面XSS" class="headerlink" title="欢迎你来到界面XSS"></a>欢迎你来到界面XSS</h2><p>特殊的代码实现了欢迎功能！</p>
+                <h2 id="欢迎你来到界面XSS"><a href="#欢迎你来到界面XSS" class="headerlink" title="欢迎你来到界面XSS"></a>欢迎你来到界面XSS</h2><pre><code class="language-php">
+<?php
 <div class="iframe-container">
     <iframe src="/level1" scrolling="no"></iframe>
 </div>
@@ -286,10 +287,10 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
 <script>
 window.alert = function()  
-{     
+&#123;     
 confirm("完成的不错！");
  window.location.href="level2.php?keyword=test"; 
-}
+&#125;
 </script>
 <title>欢迎来到level1</title>
 </head>
@@ -306,6 +307,11 @@ echo "<h3 align=center>payload的长度:".strlen($str)."</h3>";
 ?>
 </body>
 </html>
+?>
+</code></pre>
+
+
+
                 
               </div>
             
@@ -360,9 +366,9 @@ echo "<h3 align=center>payload的长度:".strlen($str)."</h3>";
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/10/29/DH/" title="作者导航">
+                      <a href="/2023/03/14/MY/" title="MySQL-靶场">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">作者导航</span>
+                        <span class="hidden-mobile">MySQL-靶场</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -444,7 +450,7 @@ echo "<h3 align=center>payload的长度:".strlen($str)."</h3>";
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索淋鱼鱼的文章</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -452,7 +458,7 @@ echo "<h3 align=center>payload的长度:".strlen($str)."</h3>";
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">输入你要搜索内容关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -631,7 +637,7 @@ echo "<h3 align=center>payload的长度:".strlen($str)."</h3>";
   
 
   <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+    <div class="noscript-warning">淋🐟🐟</div>
   </noscript>
 </body>
 </html>
